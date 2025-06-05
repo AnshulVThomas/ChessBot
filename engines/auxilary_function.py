@@ -1,5 +1,6 @@
 import numpy as np
 from chess import Board
+import pickle
 
 def board_to_matrix(board: Board):
     matrix= np.zeros((13,8,8))
@@ -30,5 +31,6 @@ def create_input_for_nn(games):
     return np.array(x,dtype=np.float32),np.array(y)
 
 def encode_moves(moves):
-    move_to_int={move: idx for idx,move in enumerate(set(moves))}
+    with open("../models/final_move_to_int.pkl" ,'rb') as file:
+        move_to_int=pickle.load(file)
     return np.array([move_to_int[move] for move in moves],dtype=np.float32),move_to_int
